@@ -1,11 +1,69 @@
-import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import React, { useState } from 'react';
+
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
+
+    let history = useHistory();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onChangeEmail = (event) => {
+        setEmail(event.target.value);
+      }
+    
+      const onChangePassword = (event) => {
+        setPassword(event.target.value);
+      }
+
+    const handleClick = () => {
+        console.log(email, password);
+        if (email === "" || password === "") {
+          alert('please enter valid email and password')
+         }
+        else {
+           window.localStorage.setItem(email,password);
+           history.push('/BookList')
+        }
+    }
+  
     return (
-        <div>
-            Hello world
-        </div>
-    )
+        <>
+          <Container style={{width:'40rem',backgroundColor:'#5C4033', marginTop:'30px'}}>
+    
+          <Card style={{backgroundColor:'#C89D7C'}}>
+          <Card.Body>
+
+            <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control name = "email" type="email" placeholder="Enter email" onChange={onChangeEmail}/>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control name = "password"type="password" placeholder="Password" onChange={onChangePassword}/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Logged In" />
+            </Form.Group>
+            <Button variant="success" type="submit" onClick={handleClick}>Submit</Button>
+            </Form>
+            </Card.Body>
+            </Card>
+
+            </Container>
+            
+            
+        </>
+);
 }
 
 export default Login;
